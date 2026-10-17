@@ -1,0 +1,26 @@
+{
+  "name": "aredn-map-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt build",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "d3-force": "^3.0.0",
+    "nuxt": "^4.6.1",
+    "vue": "^3.5.0",
+    "vue-i18n": "^11.4.14"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/d3-force": "^3.0.10",
+    "daisyui": "^5.7.50",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.0"
+  }
+}

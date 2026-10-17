@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+@plugin 'daisyui';
+
+@plugin 'daisyui' {
+  themes: light, dark --default;
+}
+
+:root {
+  --aredn-grid-line: rgba(148, 163, 184, 0.12);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+}
+
+/*
+ * The SDK puts a full-size div with z-index:1000 inside the host. Without its
+ * own stacking context those numbers compete directly with the page's own
+ * overlays, so the control bar and the node drawer end up underneath the map
+ * and stop taking clicks. isolation keeps the SDK's layering inside the host.
+ */
+.aredn-map-host {
+  isolation: isolate;
+}
+
+/* Fixed-height panels so the map / canvas / table keep their footprint. */
+.panel-body {
+  min-height: 0;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.aredn-row-active {
+  background-color: color-mix(in oklab, var(--color-base-200) 70%, transparent);
+}
+
+/* Scrollbars that do not fight the dark theme. */
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
+}
+
+.tmap-fallback-grid {
+  background-image: linear-gradient(var(--aredn-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--aredn-grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/*
+ * Selection marker. The transform puts the element's origin at the node; the
+ * negative margins pull the SVG's tip onto that point.
+ */
+.aredn-sel-pin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 25;
+  margin: -40px 0 0 -15px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.45));
+}

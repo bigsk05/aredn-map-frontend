@@ -1,0 +1,7 @@
+# Owns this directory as a pnpm workspace: without it, pnpm walks up to a parent
+# workspace file and the approvals below stop applying.
+packages:
+  - '.'
+
+allowBuilds:
+  esbuild: true
