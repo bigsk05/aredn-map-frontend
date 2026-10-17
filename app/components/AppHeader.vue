@@ -51,20 +51,20 @@ watch(
 </script>
 
 <template>
-  <header class="navbar border-b border-base-300 bg-base-200/70 px-4">
-    <div class="navbar-start gap-3">
-      <span class="flex items-end gap-[3px]" aria-hidden="true">
+  <header class="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-base-300 bg-base-200/70 px-4 py-2.5">
+    <div class="flex min-w-0 basis-full items-center gap-3 sm:basis-auto">
+      <span class="flex shrink-0 items-end gap-[3px]" aria-hidden="true">
         <i class="block h-4 w-1 rounded-sm bg-success" />
         <i class="block h-6 w-1 rounded-sm bg-info" />
         <i class="block h-3 w-1 rounded-sm bg-warning" />
       </span>
-      <div class="leading-tight">
-        <h1 class="text-lg font-semibold tracking-tight">{{ t('app.title') }}</h1>
-        <p class="text-xs opacity-70">{{ t('app.subtitle') }}</p>
+      <div class="min-w-0 leading-tight">
+        <h1 class="truncate text-base font-semibold tracking-tight sm:text-lg">{{ t('app.title') }}</h1>
+        <p class="truncate text-[11px] opacity-70 sm:text-xs">{{ t('app.subtitle') }}</p>
       </div>
     </div>
 
-    <div class="navbar-end flex-wrap gap-2">
+    <div class="flex flex-wrap items-center gap-2">
       <span class="badge badge-ghost gap-2 border-base-300 text-xs" :title="syncedAt ? t('header.syncedAt', { time: syncedAt }) : ''">
         <span
           class="inline-block h-2 w-2 rounded-full"
@@ -79,7 +79,7 @@ watch(
         <span v-if="mounted && lastSync" class="tabular opacity-60">· {{ t('header.agoS', { n: elapsed }) }}</span>
       </span>
 
-      <span v-if="status" class="badge badge-ghost gap-2 border-base-300 text-xs tabular" :title="t('header.workHint')">
+      <span v-if="status" class="badge badge-ghost hidden gap-2 border-base-300 text-xs tabular sm:inline-flex" :title="t('header.workHint')">
         {{ t('header.fetch', { busy: status.scan.workers_busy, total: status.scan.worker_slots }) }}
         ·
         {{ t('header.probe', { busy: status.scan.probes_active, total: status.scan.probe_slots }) }}

@@ -407,6 +407,8 @@ export interface ActiveChip {
   /** i18n key, resolved with params by the component that draws it. */
   labelKey: string
   params?: Record<string, string | number>
+  /** Shown when labelKey has no translation: a link type the backend invented. */
+  raw?: string
   clear: () => void
 }
 
@@ -535,7 +537,7 @@ export function useFilters(): FilteredBundle {
     for (const b of f.bands) out.push({ key: `band:${b}`, labelKey: 'band.' + b, clear: () => toggleBand(b) })
     for (const c of f.channels)
       out.push({ key: `ch:${c}`, ...channelText(c), clear: () => toggleChannel(c) })
-    for (const t of f.linkTypes) out.push({ key: `lt:${t}`, labelKey: 'linkType.' + t, clear: () => toggleLinkType(t) })
+    for (const t of f.linkTypes) out.push({ key: `lt:${t}`, labelKey: 'linkType.' + t, raw: t, clear: () => toggleLinkType(t) })
     if (f.showDown) out.push({ key: 'down', labelKey: 'filters.showDown', clear: () => (f.showDown = false) })
     if (f.online !== 'all')
       out.push({ key: 'on', labelKey: ONLINE_KEYS[f.online], clear: () => (f.online = 'all') })

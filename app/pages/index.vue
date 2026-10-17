@@ -80,12 +80,12 @@ useHead({ title: computed(() => `${t('app.title')} · ${t('app.subtitle')}`) })
       <IpLookupBox :nodes="nodes" @select="select" />
 
       <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-        <div class="xl:col-span-3 xl:self-start 2xl:col-span-2">
+        <div class="order-2 xl:order-none xl:col-span-3 xl:self-start 2xl:col-span-2">
           <FilterRail :status="status" />
         </div>
 
         <!-- The list sits under the view it describes. -->
-        <div class="flex flex-col items-stretch gap-4 self-start xl:col-span-9 2xl:col-span-10">
+        <div class="order-1 flex flex-col items-stretch gap-4 self-start xl:order-none xl:col-span-9 2xl:col-span-10">
 
         <section class="card border border-base-300">
           <div class="card-body gap-2 p-3">

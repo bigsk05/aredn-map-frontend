@@ -126,18 +126,18 @@ const selectedLabel = computed(() => {
       @scroll.passive="onScroll"
     >
       <!-- table-fixed: content-sized columns would reflow on every latency digit. -->
-      <table class="table table-xs table-compact table-fixed">
+      <table class="table table-xs table-compact table-fixed min-w-[460px]">
         <thead class="sticky top-0 z-10 bg-base-300/90 backdrop-blur">
           <tr>
-            <th class="w-[30%] cursor-pointer select-none" @click="setSort('name')">{{ t('table.name') }}{{ arrow('name') }}</th>
-            <th class="w-[14%] cursor-pointer select-none" @click="setSort('band')">{{ t('table.band') }}{{ arrow('band') }}</th>
-            <th class="w-[8%] cursor-pointer select-none text-right" @click="setSort('hops')">{{ t('table.hops') }}{{ arrow('hops') }}</th>
-            <th class="w-[16%] cursor-pointer select-none text-right" @click="setSort('latency')">{{ t('table.latency') }}{{ arrow('latency') }}</th>
-            <th class="w-[10%] cursor-pointer select-none text-right" @click="setSort('snr')">SNR{{ arrow('snr') }}</th>
-            <th class="hidden cursor-pointer select-none md:table-cell" @click="setSort('firmware')">
+            <th class="w-[34%] cursor-pointer select-none md:w-[22%]" @click="setSort('name')">{{ t('table.name') }}{{ arrow('name') }}</th>
+            <th class="w-[16%] cursor-pointer select-none md:w-[12%]" @click="setSort('band')">{{ t('table.band') }}{{ arrow('band') }}</th>
+            <th class="w-[16%] cursor-pointer select-none text-right md:w-[10%]" @click="setSort('hops')">{{ t('table.hops') }}{{ arrow('hops') }}</th>
+            <th class="w-[22%] cursor-pointer select-none text-right md:w-[14%]" @click="setSort('latency')">{{ t('table.latency') }}{{ arrow('latency') }}</th>
+            <th class="hidden w-[12%] cursor-pointer select-none text-right sm:table-cell" @click="setSort('snr')">SNR{{ arrow('snr') }}</th>
+            <th class="hidden w-[14%] cursor-pointer select-none md:table-cell" @click="setSort('firmware')">
               {{ t('table.firmware') }}{{ arrow('firmware') }}
             </th>
-            <th class="hidden cursor-pointer select-none lg:table-cell" @click="setSort('location')">
+            <th class="hidden w-[16%] cursor-pointer select-none lg:table-cell" @click="setSort('location')">
               {{ t('table.location') }}{{ arrow('location') }}
             </th>
           </tr>
@@ -172,7 +172,7 @@ const selectedLabel = computed(() => {
             </td>
             <td class="text-right tabular">{{ hopDepth(n) ?? '—' }}</td>
             <td class="text-right tabular">{{ latencyMs(n) != null ? latencyMs(n)!.toFixed(1) + 'ms' : '—' }}</td>
-            <td class="text-right tabular">{{ snrByNode.get(nodeId(n)) ?? '—' }}</td>
+            <td class="hidden text-right tabular sm:table-cell">{{ snrByNode.get(nodeId(n)) ?? '—' }}</td>
             <td class="hidden max-w-[8rem] truncate font-mono text-[10px] md:table-cell">{{ n.firmware || '—' }}</td>
             <td class="hidden max-w-[10rem] truncate lg:table-cell">
               <span

@@ -5,7 +5,7 @@ import { useFilters } from '~/composables/useMeshStore'
 
 const props = defineProps<{ status: StatusPayload | null }>()
 
-const { t } = useLang()
+const { t, text } = useLang()
 const {
   filters,
   toggleBand,
@@ -80,7 +80,7 @@ const hopsText = computed(() =>
           :title="t('filters.remove')"
           @click="chip.clear"
         >
-          {{ t(chip.labelKey, chip.params ?? {}) }}
+          {{ text(chip.labelKey, chip.raw ?? '', chip.params ?? {}) }}
           <span class="opacity-60">✕</span>
         </button>
       </div>
@@ -166,7 +166,7 @@ const hopsText = computed(() =>
             :class="filters.linkTypes.includes(lt) ? 'btn-primary' : 'border border-base-300'"
             @click="toggleLinkType(lt)"
           >
-            {{ t('linkType.' + lt) }}
+            {{ text('linkType.' + lt, lt) }}
             <span class="tabular opacity-60">{{ linkCounts[lt] ?? 0 }}</span>
           </button>
         </div>
@@ -192,11 +192,11 @@ const hopsText = computed(() =>
         <label class="label py-1">
           <span class="label-text-alt text-xs opacity-70">{{ t('filters.onlineState') }}</span>
         </label>
-        <div class="join w-full">
+        <div class="flex flex-wrap gap-1">
           <button
             v-for="opt in ONLINE_STEPS"
             :key="opt.v"
-            class="btn join-item btn-xs grow"
+            class="btn btn-xs"
             :class="filters.online === opt.v ? 'btn-primary' : 'border border-base-300'"
             :title="opt.n === null ? '' : t('filters.stateTip', { label: t(opt.key), count: onlineCounts[opt.n] })"
             @click="filters.online = opt.v as never"
