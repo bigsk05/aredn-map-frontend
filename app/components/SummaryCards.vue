@@ -46,6 +46,7 @@ function labelled(map: Record<string, string>, value: string) {
       <div class="stat-value tabular text-info">{{ c?.total ?? '—' }}</div>
       <div class="stat-desc whitespace-normal">
         {{ t('summary.pendingDetail', { n: c?.pending ?? 0 }) }} ·
+        {{ t('summary.crawlFailed', { n: c?.failed ?? 0 }) }} ·
         {{ t('summary.supernodes', { n: c?.supernodes ?? 0 }) }}
       </div>
     </article>

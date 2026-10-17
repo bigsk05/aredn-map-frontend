@@ -1,6 +1,6 @@
 /** Wire types: field names mirror the Go backend contract exactly. */
 
-export type BandKey = 'h' | '9' | '2' | '3' | '5' | 's' | 'n' | 'w' | 'u' | 'p'
+export type BandKey = 'h' | '9' | '2' | '3' | '5' | 's' | 'n' | 'u' | 'p'
 
 export interface NodeServices {
   [protocol: string]: string[]
@@ -147,6 +147,8 @@ export interface StatusPayload {
     unreachable: number
     /** Nodes the scanner reached and expanded. */
     crawled: number
+    /** Known nodes that never gave up a status page, however often we looked. */
+    failed: number
     located: number
     supernodes: number
     pending: number
@@ -220,7 +222,6 @@ export const BAND_COLORS: Record<BandKey, string> = {
   '5': '#3b82f6',
   s: '#a855f7',
   n: '#64748b',
-  w: '#14b8a6',
   u: '#94a3b8',
   p: '#78716c',
 }
@@ -234,7 +235,6 @@ export const BAND_ROWS: Array<{ key: BandKey; noteKey?: string }> = [
   { key: '5', noteKey: 'bandNote.5' },
   { key: 's', noteKey: 'bandNote.s' },
   { key: 'n', noteKey: 'bandNote.n' },
-  { key: 'w', noteKey: 'bandNote.w' },
   { key: 'u' },
   { key: 'p' },
 ]
