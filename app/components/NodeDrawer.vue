@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { MeshLink, MeshNode } from '~/types'
 import { BAND_COLORS, hopDepth, latencyMs, lossPct, probeSeen } from '~/types'
-import { bandColor, CHANNEL_KEYS, channelBucket, nodeId } from '~/composables/useMeshStore'
+import { apiBase, bandColor, CHANNEL_KEYS, channelBucket, nodeId } from '~/composables/useMeshStore'
 import { gridOf, wgs84Text } from '~/composables/useGrid'
 
 const props = defineProps<{ node: MeshNode | null; links: MeshLink[] }>()
@@ -52,6 +52,24 @@ const channelValue = computed(() => {
   const key = CHANNEL_KEYS[bucket]
   return key ? t(key) : bucket
 })
+
+const reprobing = ref(false)
+const reprobeError = ref(false)
+
+/** One fresh ICMP verdict for this node; the push updates the row underneath. */
+async function reprobe() {
+  const host = props.node?.hostname
+  if (!host || reprobing.value) return
+  reprobing.value = true
+  reprobeError.value = false
+  try {
+    await $fetch(`${apiBase()}/probe`, { method: 'POST', body: { host } })
+  } catch {
+    reprobeError.value = true
+  } finally {
+    reprobing.value = false
+  }
+}
 
 function stamp(iso: string | null | undefined) {
   if (!iso) return '—'
@@ -126,9 +144,18 @@ function stamp(iso: string | null | undefined) {
         <span class="opacity-60">{{ t('drawer.packets') }}</span><span class="tabular">{{ fmt(node.packets_recv) }} / {{ fmt(node.packets_sent) }}</span>
         <span class="opacity-60">babel</span>
         <span class="tabular">metric {{ fmt(node.babel_metric) }} · routes {{ fmt(node.babel_routes) }}</span>
-        <span class="opacity-60">{{ t('drawer.lastProbe') }}</span><span class="tabular">{{ stamp(node.probed_at) }}</span>
+        <span class="opacity-60">{{ t('drawer.lastProbe') }}</span>
+        <span class="flex items-center justify-end gap-2">
+          <span class="tabular">{{ stamp(node.probed_at) }}</span>
+          <button class="btn btn-xs border border-base-300" :disabled="reprobing" @click="reprobe">
+            <span v-if="reprobing" class="loading loading-spinner loading-xs" />
+            {{ t(reprobing ? 'drawer.reprobing' : 'drawer.reprobe') }}
+          </button>
+        </span>
         <span class="opacity-60">{{ t('drawer.source') }}</span><span>{{ node.source }} · {{ node.detail_fetched ? t('drawer.detailYes') : t('drawer.detailNo') }}</span>
       </div>
+
+      <p v-if="reprobeError" class="rounded bg-error/10 p-2 text-[10px] text-error">{{ t('drawer.reprobeError') }}</p>
 
       <p v-if="node.probe_error" class="break-all rounded bg-error/10 p-2 text-[10px] text-error">{{ node.probe_error }}</p>
 

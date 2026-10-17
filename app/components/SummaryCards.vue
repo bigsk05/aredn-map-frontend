@@ -16,6 +16,7 @@ const PHASE_KEYS: Record<string, string> = {
   discovery: 'phase.discovery',
   probe: 'phase.probe',
   detail: 'phase.detail',
+  revisit: 'phase.revisit',
   completed: 'phase.completed',
   failed: 'phase.failed',
   stopped: 'phase.stopped',
